@@ -1,21 +1,34 @@
-import { StatusBar } from 'expo-status-bar';
-import React from 'react';
+import React, { useState } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
+import MealsNavigation from './navigation/MealsNavigation';
+import * as Font from 'expo-font';
+import AppLoading from 'expo-app-loading';
+
+const fetchFonts = () => {
+  Font.loadAsync({
+    HeyBenito: require('./assets/fonts/HeyBenito.ttf'),
+  });
+};
 
 export default function App() {
+  const [appLoaded, setAppLoaded] = useState(false);
+
+  if (!appLoaded) {
+    return (
+      <AppLoading
+        startAsync={fetchFonts}
+        onFinish={() => setAppLoaded(true)}
+        onError={console.warn}
+      />
+    );
+  }
+
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <NavigationContainer>
+      <MealsNavigation />
+    </NavigationContainer>
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+const styles = StyleSheet.create({});
