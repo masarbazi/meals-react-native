@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useLayoutEffect, useState } from 'react';
 import {
   View,
   Text,
@@ -6,11 +6,37 @@ import {
   Image,
   Dimensions,
   ScrollView,
+  Alert,
+  TouchableOpacity,
 } from 'react-native';
+import { AntDesign } from '@expo/vector-icons';
 
 const MealDetailsScreen = ({ route, navigation }) => {
   const { meal } = route.params;
-  console.log(meal);
+  const [faved, setFaved] = useState(false);
+  console.log('fav', faved);
+
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      headerRight: () => {
+        return (
+          <TouchableOpacity
+            onPress={() => {
+              setFaved(true);
+            }}
+          >
+            <View style={{ padding: 10 }}>
+              {faved ? (
+                <AntDesign name='star' size={20} color='#000' />
+              ) : (
+                <AntDesign name='staro' size={20} color='#000' />
+              )}
+            </View>
+          </TouchableOpacity>
+        );
+      },
+    });
+  }, [navigation, faved]);
 
   return (
     <ScrollView style={styles.container}>
