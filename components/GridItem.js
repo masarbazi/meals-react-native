@@ -23,6 +23,11 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     alignItems: 'flex-end',
     justifyContent: 'flex-end',
+    shadowColor: '#333',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.3,
+    shadowRadius: 10,
+    elevation: 4,
   },
   gridItemText: {
     fontSize: 18,

@@ -16,7 +16,7 @@ const MealsNavigation = () => {
           backgroundColor: '#FFC074',
         },
         headerTitleStyle: {
-          fontFamily: 'HeyBenito',
+          fontFamily: 'OceanSummer',
           fontSize: 30,
         },
       }}
@@ -33,7 +33,11 @@ const MealsNavigation = () => {
         component={CategoryMealsScreen}
         options={({ route }) => ({ title: route.params.category.title })}
       />
-      <Stack.Screen name='MealDetail' component={MealDetailScreen} />
+      <Stack.Screen
+        name='MealDetail'
+        component={MealDetailScreen}
+        options={({ route }) => ({ title: route.params.meal.title })}
+      />
     </Stack.Navigator>
   );
 };
