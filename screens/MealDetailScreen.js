@@ -14,7 +14,6 @@ import { AntDesign } from '@expo/vector-icons';
 const MealDetailsScreen = ({ route, navigation }) => {
   const { meal } = route.params;
   const [faved, setFaved] = useState(false);
-  console.log('fav', faved);
 
   useLayoutEffect(() => {
     navigation.setOptions({

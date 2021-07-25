@@ -9,7 +9,6 @@ import {
 } from 'react-native';
 
 const MealItem = ({ meal, navigation }) => {
-  console.log('meal url', meal.imageUrl);
   return (
     <TouchableOpacity
       onPress={() => navigation.navigate('MealDetail', { meal })}

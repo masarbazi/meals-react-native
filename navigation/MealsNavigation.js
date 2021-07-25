@@ -3,11 +3,13 @@ import { Platform } from 'react-native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
+import { createDrawerNavigator } from '@react-navigation/drawer';
 import { MaterialCommunityIcons, MaterialIcons } from '@expo/vector-icons';
 import CategoriesScreen from '../screens/CategoriesScreen';
 import CategoryMealsScreen from '../screens/CategoryMealsScreen';
 import MealDetailScreen from '../screens/MealDetailScreen';
 import FavoritesScreen from '../screens/FavoritesScreen';
+import FiltersScreen from '../screens/FiltersScreen';
 import { Colors } from '../constants/Colors';
 
 const Stack = createStackNavigator();
@@ -15,21 +17,24 @@ const Tab =
   Platform.OS == 'ios'
     ? createBottomTabNavigator()
     : createMaterialBottomTabNavigator();
+const Drawer = createDrawerNavigator();
+
+const stackNavigationDefualtScreenOptions = {
+  headerTitleAlign: 'center',
+  headerStyle: {
+    backgroundColor: Colors.header,
+  },
+  headerTitleStyle: {
+    fontFamily: 'OceanSummer',
+    fontSize: 30,
+  },
+};
 
 const MealsNavigation = () => {
   return (
     <Stack.Navigator
       initialRouteName='Categories'
-      screenOptions={{
-        headerTitleAlign: 'center',
-        headerStyle: {
-          backgroundColor: Colors.header,
-        },
-        headerTitleStyle: {
-          fontFamily: 'OceanSummer',
-          fontSize: 30,
-        },
-      }}
+      screenOptions={stackNavigationDefualtScreenOptions}
     >
       <Stack.Screen
         name='Categories'
@@ -56,18 +61,25 @@ const FaveMealsNavigation = () => {
   return (
     <Stack.Navigator
       initialRouteName='Favorites'
-      screenOptions={{
-        headerTitleAlign: 'center',
-        headerStyle: {
-          backgroundColor: Colors.header,
-        },
-        headerTitleStyle: {
-          fontFamily: 'OceanSummer',
-          fontSize: 30,
-        },
-      }}
+      screenOptions={stackNavigationDefualtScreenOptions}
     >
       <Stack.Screen name='Favorites' component={FavoritesScreen} />
+      <Stack.Screen
+        name='MealDetail'
+        component={MealDetailScreen}
+        options={({ route }) => ({ title: route.params.meal.title })}
+      />
+    </Stack.Navigator>
+  );
+};
+
+const FiltersNavigator = () => {
+  return (
+    <Stack.Navigator
+      initialRouteName='Filters'
+      screenOptions={stackNavigationDefualtScreenOptions}
+    >
+      <Stack.Screen name='Filters' component={FiltersScreen} />
     </Stack.Navigator>
   );
 };
@@ -111,4 +123,13 @@ const TabNavigation = () => {
   );
 };
 
-export default TabNavigation;
+const DrawerNavigator = () => {
+  return (
+    <Drawer.Navigator>
+      <Drawer.Screen name='TabNav' component={TabNavigation} />
+      <Drawer.Screen name='FiltersNav' component={FiltersNavigator} />
+    </Drawer.Navigator>
+  );
+};
+
+export default DrawerNavigator;
