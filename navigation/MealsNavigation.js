@@ -1,5 +1,5 @@
 import React from 'react';
-import { Platform } from 'react-native';
+import { Platform, Dimensions } from 'react-native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
@@ -125,9 +125,23 @@ const TabNavigation = () => {
 
 const DrawerNavigator = () => {
   return (
-    <Drawer.Navigator>
-      <Drawer.Screen name='TabNav' component={TabNavigation} />
-      <Drawer.Screen name='FiltersNav' component={FiltersNavigator} />
+    <Drawer.Navigator
+      initialRouteName='TabNav'
+      drawerType='slide'
+      drawerStyle={{ width: '60%', backgroundColor: '#e6e6e6' }}
+      edgeWidth={Dimensions.get('window').width / 5}
+      minSwipeDistance={100}
+    >
+      <Drawer.Screen
+        name='TabNav'
+        component={TabNavigation}
+        options={{ title: 'Meals Category' }}
+      />
+      <Drawer.Screen
+        name='FiltersNav'
+        component={FiltersNavigator}
+        options={{ title: 'Filters' }}
+      />
     </Drawer.Navigator>
   );
 };

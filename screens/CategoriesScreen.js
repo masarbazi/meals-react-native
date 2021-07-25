@@ -1,8 +1,15 @@
 import React, { useLayoutEffect } from 'react';
-import { View, StyleSheet, FlatList, TouchableOpacity } from 'react-native';
+import {
+  View,
+  StyleSheet,
+  FlatList,
+  TouchableOpacity,
+  Switch,
+} from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { categories } from '../data/dummy-data';
 import GridItem from '../components/GridItem';
+import { meals } from '../data/dummy-data';
 
 const CategoriesScreen = ({ navigation }) => {
   useLayoutEffect(() => {
@@ -20,6 +27,17 @@ const CategoriesScreen = ({ navigation }) => {
     });
   }, [navigation]);
 
+  const getImageUrl = (id) => {
+    let imageUrl;
+    for (let i = 0; i < meals.length; i++) {
+      if (meals[i].categoryIds.includes(id)) {
+        imageUrl = meals[i].imageUrl;
+        break;
+      }
+    }
+    return imageUrl;
+  };
+
   return (
     <View style={styles.screen}>
       <FlatList
@@ -27,6 +45,7 @@ const CategoriesScreen = ({ navigation }) => {
         renderItem={({ item }) => (
           <GridItem
             title={item.title}
+            imageUrl={getImageUrl(item.id)}
             color={item.color}
             onSelect={() =>
               navigation.navigate('CategoryMeals', { category: item })
