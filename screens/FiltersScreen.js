@@ -1,9 +1,9 @@
 import React, { useLayoutEffect, useState } from 'react';
-import { StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
+import { StyleSheet, TouchableOpacity, ScrollView, Button } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import FilterItem from '../components/FilterItem';
 
-const FiltersScreen = ({ navigation }) => {
+const FiltersScreen = ({ navigation, route }) => {
   const [isGlutenFree, setIsGlutenFree] = useState(false);
   const [isVegan, setIsVegan] = useState(false);
   const [isVegetarian, setIsVegetarian] = useState(false);
@@ -11,6 +11,27 @@ const FiltersScreen = ({ navigation }) => {
 
   useLayoutEffect(() => {
     navigation.setOptions({
+      headerRight: () => {
+        return (
+          <TouchableOpacity
+            style={styles.headerRight}
+            onPress={() => {
+              navigation.setParams({
+                glutenFree: isGlutenFree,
+                vegan: isVegan,
+                vegetarian: isVegetarian,
+                lactoseFree: isLactoseFree,
+              });
+            }}
+          >
+            <MaterialCommunityIcons
+              name='content-save'
+              size={25}
+              color='#000'
+            />
+          </TouchableOpacity>
+        );
+      },
       headerLeft: () => {
         return (
           <TouchableOpacity
@@ -22,7 +43,7 @@ const FiltersScreen = ({ navigation }) => {
         );
       },
     });
-  }, [navigation]);
+  }, [navigation, isGlutenFree, isVegan, isVegetarian, isLactoseFree]);
 
   const filterItemMargin = 15;
   return (
@@ -30,25 +51,33 @@ const FiltersScreen = ({ navigation }) => {
       <FilterItem
         label='Is Gluten Free'
         value={isGlutenFree}
-        onSelect={(state) => setIsGlutenFree(state)}
+        onSelect={(state) => {
+          setIsGlutenFree(state);
+        }}
         style={{ margin: filterItemMargin }}
       />
       <FilterItem
         label='Is Vegan'
         value={isVegan}
-        onSelect={(state) => setIsVegan(state)}
+        onSelect={(state) => {
+          setIsVegan(state);
+        }}
         style={{ margin: filterItemMargin }}
       />
       <FilterItem
         label='Is Vegetarian'
         value={isVegetarian}
-        onSelect={(state) => setIsVegetarian(state)}
+        onSelect={(state) => {
+          setIsVegetarian(state);
+        }}
         style={{ margin: filterItemMargin }}
       />
       <FilterItem
         label='Is Lactose Free'
         value={isLactoseFree}
-        onSelect={(state) => setIsLactoseFree(state)}
+        onSelect={(state) => {
+          setIsLactoseFree(state);
+        }}
         style={{ margin: filterItemMargin }}
       />
     </ScrollView>
@@ -56,6 +85,10 @@ const FiltersScreen = ({ navigation }) => {
 };
 
 const styles = StyleSheet.create({
+  headerRight: {
+    justifyContent: 'center',
+    marginRight: 20,
+  },
   headerLeft: {
     justifyContent: 'center',
     marginLeft: 20,
