@@ -1,6 +1,7 @@
-import React, { useLayoutEffect, useState } from 'react';
-import { StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
+import React, { useLayoutEffect, useState, useEffect } from 'react';
+import { StyleSheet, TouchableOpacity, ScrollView, Button } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+
 import FilterItem from '../components/FilterItem';
 
 const FiltersScreen = ({ navigation, route }) => {

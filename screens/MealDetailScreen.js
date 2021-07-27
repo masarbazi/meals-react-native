@@ -1,4 +1,4 @@
-import React, { useLayoutEffect, useState, useEffect } from 'react';
+import React, { useLayoutEffect, useState } from 'react';
 import {
   View,
   Text,
@@ -13,17 +13,12 @@ import useStore from '../store/useStore';
 
 const MealDetailsScreen = ({ route, navigation }) => {
   const { meal } = route.params;
-  const favoriteMeals = useStore((state) => state.favoriteMeals);
+  const { favoriteMeals, toggleFavoriteMeal } = useStore((state) => ({
+    favoriteMeals: state.favoriteMeals,
+    toggleFavoriteMeal: state.toggleFavoriteMeal,
+  }));
   const favIndex = favoriteMeals.findIndex((favMeal) => favMeal.id == meal.id);
-  const [backupData, setBackupData] = useState([]);
   const [faved, setFaved] = useState(favIndex >= 0);
-
-  useEffect(() => {
-    if (faved && favIndex < 0) {
-      setBackupData([...backupData, meal]);
-      favoriteMeals.push(meal);
-    } else if (!faved && favIndex >= 0) favoriteMeals.splice(favIndex, 1);
-  }, [faved, favoriteMeals]);
 
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -32,6 +27,7 @@ const MealDetailsScreen = ({ route, navigation }) => {
           <TouchableOpacity
             onPress={() => {
               setFaved(!faved);
+              toggleFavoriteMeal(meal);
             }}
           >
             <View style={{ padding: 10 }}>

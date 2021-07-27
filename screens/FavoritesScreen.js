@@ -1,18 +1,16 @@
-import React, { useState, useCallback } from 'react';
+import React from 'react';
 import MealsList from '../components/MealsList';
 import useStore from '../store/useStore';
+import { View } from 'react-native';
 
 const FavoritesScreen = ({ navigation }) => {
-  const [, updateState] = useState();
-  const forceUpdate = useCallback(() => updateState({}), []);
-
   let favoriteMeals = useStore((state) => state.favoriteMeals);
 
-  navigation.addListener('focus', () => {
-    forceUpdate();
-  });
-
-  return <MealsList data={favoriteMeals} navigation={navigation} />;
+  return (
+    <View>
+      <MealsList data={favoriteMeals} navigation={navigation} />
+    </View>
+  );
 };
 
 export default FavoritesScreen;
