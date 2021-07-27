@@ -1,15 +1,9 @@
 import React, { useLayoutEffect } from 'react';
-import {
-  View,
-  StyleSheet,
-  FlatList,
-  TouchableOpacity,
-  Switch,
-} from 'react-native';
+import { View, StyleSheet, FlatList, TouchableOpacity } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { categories } from '../data/dummy-data';
 import GridItem from '../components/GridItem';
-import { meals } from '../data/dummy-data';
+import useStore from '../store/useStore';
 
 const CategoriesScreen = ({ navigation }) => {
   useLayoutEffect(() => {
@@ -27,6 +21,7 @@ const CategoriesScreen = ({ navigation }) => {
     });
   }, [navigation]);
 
+  const meals = useStore((state) => state.meals);
   const getImageUrl = (id) => {
     let imageUrl;
     for (let i = 0; i < meals.length; i++) {

@@ -1,4 +1,4 @@
-import React, { useLayoutEffect, useState } from 'react';
+import React, { useLayoutEffect, useState, useEffect } from 'react';
 import {
   View,
   Text,
@@ -6,14 +6,24 @@ import {
   Image,
   Dimensions,
   ScrollView,
-  Alert,
   TouchableOpacity,
 } from 'react-native';
 import { AntDesign } from '@expo/vector-icons';
+import useStore from '../store/useStore';
 
 const MealDetailsScreen = ({ route, navigation }) => {
   const { meal } = route.params;
-  const [faved, setFaved] = useState(false);
+  const favoriteMeals = useStore((state) => state.favoriteMeals);
+  const favIndex = favoriteMeals.findIndex((favMeal) => favMeal.id == meal.id);
+  const [backupData, setBackupData] = useState([]);
+  const [faved, setFaved] = useState(favIndex >= 0);
+
+  useEffect(() => {
+    if (faved && favIndex < 0) {
+      setBackupData([...backupData, meal]);
+      favoriteMeals.push(meal);
+    } else if (!faved && favIndex >= 0) favoriteMeals.splice(favIndex, 1);
+  }, [faved, favoriteMeals]);
 
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -21,7 +31,7 @@ const MealDetailsScreen = ({ route, navigation }) => {
         return (
           <TouchableOpacity
             onPress={() => {
-              setFaved(true);
+              setFaved(!faved);
             }}
           >
             <View style={{ padding: 10 }}>

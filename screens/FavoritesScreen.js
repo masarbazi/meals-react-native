@@ -1,11 +1,16 @@
-import React from 'react';
-import { meals } from '../data/dummy-data';
+import React, { useState, useCallback } from 'react';
 import MealsList from '../components/MealsList';
+import useStore from '../store/useStore';
 
 const FavoritesScreen = ({ navigation }) => {
-  const favoriteMeals = meals.filter(
-    (meal) => meal.id == 'm3' || meal.id == 'm1' || meal.id == 'm5'
-  );
+  const [, updateState] = useState();
+  const forceUpdate = useCallback(() => updateState({}), []);
+
+  let favoriteMeals = useStore((state) => state.favoriteMeals);
+
+  navigation.addListener('focus', () => {
+    forceUpdate();
+  });
 
   return <MealsList data={favoriteMeals} navigation={navigation} />;
 };

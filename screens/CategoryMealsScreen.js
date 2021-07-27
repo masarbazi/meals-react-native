@@ -1,8 +1,9 @@
 import React from 'react';
-import { meals } from '../data/dummy-data';
 import MealsList from '../components/MealsList';
+import useStore from '../store/useStore';
 
 const CategoryMealsScreen = ({ navigation, route }) => {
+  const meals = useStore((state) => state.filteredMeals);
   const { category } = route.params;
   const displayedMeals = meals.filter((meal) =>
     meal.categoryIds.includes(category.id)
