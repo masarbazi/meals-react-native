@@ -9,7 +9,13 @@ const CategoryMealsScreen = ({ navigation, route }) => {
     meal.categoryIds.includes(category.id)
   );
 
-  return <MealsList navigation={navigation} data={displayedMeals} />;
+  return (
+    <MealsList
+      navigation={navigation}
+      data={displayedMeals}
+      noMealsMessage='There are no meals on this category. Chnage filters for more results.'
+    />
+  );
 };
 
 export default CategoryMealsScreen;

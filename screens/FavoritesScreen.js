@@ -8,7 +8,11 @@ const FavoritesScreen = ({ navigation }) => {
 
   return (
     <View>
-      <MealsList data={favoriteMeals} navigation={navigation} />
+      <MealsList
+        data={favoriteMeals}
+        navigation={navigation}
+        noMealsMessage='You have no favorite food.'
+      />
     </View>
   );
 };
