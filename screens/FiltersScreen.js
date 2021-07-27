@@ -2,6 +2,7 @@ import React, { useLayoutEffect, useState, useEffect } from 'react';
 import { StyleSheet, TouchableOpacity, ScrollView, Button } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
+import useStore from '../store/useStore';
 import FilterItem from '../components/FilterItem';
 
 const FiltersScreen = ({ navigation, route }) => {
@@ -9,6 +10,9 @@ const FiltersScreen = ({ navigation, route }) => {
   const [isVegan, setIsVegan] = useState(false);
   const [isVegetarian, setIsVegetarian] = useState(false);
   const [isLactoseFree, setIsLactoseFree] = useState(false);
+  const saveFiltersAndUpdateFilteredMeals = useStore(
+    (state) => state.saveFiltersAndUpdateFilteredMeals
+  );
 
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -17,12 +21,14 @@ const FiltersScreen = ({ navigation, route }) => {
           <TouchableOpacity
             style={styles.headerRight}
             onPress={() => {
-              navigation.setParams({
+              const filters = {
                 glutenFree: isGlutenFree,
                 vegan: isVegan,
                 vegetarian: isVegetarian,
                 lactoseFree: isLactoseFree,
-              });
+              };
+              navigation.setParams(filters);
+              saveFiltersAndUpdateFilteredMeals(filters);
             }}
           >
             <MaterialCommunityIcons
