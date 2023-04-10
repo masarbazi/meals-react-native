@@ -1,0 +1,31 @@
+{
+  "expo": {
+    "name": "meals-react-native",
+    "slug": "meals-react-native",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/images/app/meals-logo.png",
+    "userInterfaceStyle": "light",
+    "splash": {
+      "image": "./assets/images/app/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#FFBD59"
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "ios": {
+      "supportsTablet": true
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/images/app/meals-logo.png",
+        "backgroundColor": "#FFBD59"
+      },
+      "package": "ir.masarbazi.chibokhoram"
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
+    }
+  }
+}
